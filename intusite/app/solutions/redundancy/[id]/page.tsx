@@ -114,7 +114,9 @@ export default async function DataSecuritySolutionDetail({ params }: { params: P
 }
 
 export function generateStaticParams() {
-    return solutions.map((solution) => ({
-        id: solution.id,
-    }));
+    return solutions
+        .filter((solution) => solution.id !== 'mantech-mccs')
+        .map((solution) => ({
+            id: solution.id,
+        }));
 }

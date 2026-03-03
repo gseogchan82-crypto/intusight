@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans KR", sans-serif;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  /* Dark Glassmorphism */
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:bg-white/10 hover:shadow-blue-500/20 hover:-translate-y-1 hover:border-white/20;
+  }
+
+  /* Radiant Text */
+  .text-radiant {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-slate-300;
+  }
+
+  .text-radiant-blue {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400;
+  }
+
+  /* Glow Effects */
+  .glow-box {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: translateX(-200%);
+  }
+
+  .glow-box:hover::before {
+    animation: shimmer 1.5s infinite;
+  }
+
+  .animate-infinite-scroll {
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+}
+
+
+/* Keyframes - Defined at Root Level for Global Access */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+    size: A4 portrait;
+  }
+
+  html,
+  body,
+  main,
+  section {
+    background-color: white !important;
+    background: transparent !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  /* Hide Header, Footer, and other non-content elements */
+  header,
+  nav,
+  footer,
+  aside,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  /* Reset layout constraints that break Chrome's print engine */
+  [class*="min-h-screen"],
+  section.h-\[500px\] {
+    height: auto !important;
+    min-height: auto !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Reset Text Colors so white text on dark bg becomes visible on white paper */
+  .text-white,
+  [class*="text-slate-200"],
+  [class*="text-blue-100"],
+  [class*="text-indigo-100"],
+  [class*="text-teal-100"],
+  [class*="text-orange-100"],
+  [class*="text-purple-100"] {
+    color: #1a202c !important;
+    text-shadow: none !important;
+  }
+
+  /* Turn off gradients for text */
+  .text-transparent,
+  [class*="bg-clip-text"] {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: none !important;
+  }
+
+  /* Allow cards to break across pages naturally if they are too big */
+  div,
+  section,
+  article {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+}
